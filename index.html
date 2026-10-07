@@ -1,6 +1,4 @@
-from pathlib import Path
-
-html = r'''<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -95,6 +93,8 @@ button,input,select,textarea{font-family:inherit}
   width:205px;
   height:62px;
   object-fit:contain;
+  display:block;
+  mix-blend-mode:screen;
 }
 .navlinks{
   display:flex;
@@ -174,9 +174,11 @@ button,input,select,textarea{font-family:inherit}
   backdrop-filter:blur(7px);
   border-radius:2px;
 }
-.hero-logo .logo-symbol{
+.hero-logo-image{
   width:100%;
   max-height:210px;
+  display:block;
+  object-fit:contain;
 }
 .hero h1{
   font:600 clamp(40px,6vw,72px)/.95 "Cormorant Garamond";
@@ -411,6 +413,12 @@ section{padding:95px 0}
   width:180px;
   margin-bottom:15px;
 }
+.contact-logo-image{
+  width:100%;
+  height:auto;
+  display:block;
+  object-fit:contain;
+}
 .map{
   height:390px;
   border:1px solid var(--line);
@@ -446,6 +454,23 @@ footer{
   font-weight:700;
 }
 
+
+/* TRANSPARENT NEON LOGO */
+.hero-logo-image{
+  width:100%;
+  max-height:210px;
+  display:block;
+  object-fit:contain;
+  mix-blend-mode:screen;
+}
+.contact-logo-image{
+  width:100%;
+  height:auto;
+  display:block;
+  object-fit:contain;
+  mix-blend-mode:screen;
+}
+
 /* MOBILE */
 @media(max-width:850px){
   .nav{
@@ -457,6 +482,8 @@ footer{
   .brand-logo{
     width:155px;
     height:52px;
+    mix-blend-mode:screen;
+    object-fit:contain;
   }
   .navlinks{display:none}
   .nav>.btn{
@@ -471,7 +498,7 @@ footer{
     width:min(500px,90vw);
     padding:8px 10px;
   }
-  .hero-logo .logo-symbol{
+  .hero-logo-image{
     max-height:150px;
   }
   .hero h1{
@@ -543,36 +570,7 @@ footer{
 
 <nav class="nav">
   <a class="brand" href="#home" aria-label="New Look Hair & Beauty Saloon">
-    <svg class="logo-symbol brand-logo" viewBox="0 0 1200 434" role="img" aria-label="New Look salon symbol">
-      <defs>
-        <linearGradient id="chromeGradient" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#ffffff"/>
-          <stop offset=".28" stop-color="#bfeaff"/>
-          <stop offset=".52" stop-color="#eaf9ff"/>
-          <stop offset=".75" stop-color="#77cfff"/>
-          <stop offset="1" stop-color="#dff7ff"/>
-        </linearGradient>
-        <filter id="logoGlow">
-          <feGaussianBlur stdDeviation="4" result="blur"/>
-          <feMerge>
-            <feMergeNode in="blur"/>
-            <feMergeNode in="SourceGraphic"/>
-          </feMerge>
-        </filter>
-      </defs>
-      <g class="chrome" stroke-width="18">
-        <path d="M80 105V315h145c55 0 75-82 7-98-28-7-67 3-105 3"/>
-        <path d="M350 270c-70-8-91-86-41-133 48-46 137-42 174 12 38 55 3 126-64 132-57 5-104-28-104-78 0-40 36-69 79-69 38 0 69 24 69 55 0 30-27 51-60 51-28 0-51-16-51-38 0-17 15-31 35-31"/>
-        <path d="M850 270c70-8 91-86 41-133-48-46-137-42-174 12-38 55-3 126 64 132 57 5 104-28 104-78 0-40-36-69-79-69-38 0-69 24-69 55 0 30 27 51 60 51 28 0 51-16 51-38 0-17-15-31-35-31"/>
-        <path d="M1010 105v210M1010 205l102-78c40-31 74 5 46 38l-132 150"/>
-        <path d="M600 185L500 70M600 185L700 70"/>
-      </g>
-      <circle class="dot" cx="600" cy="185" r="20" stroke-width="12"/>
-      <circle class="dot" cx="445" cy="195" r="15"/>
-      <circle class="dot" cx="755" cy="195" r="15"/>
-      <circle class="shine" cx="500" cy="70" r="7"/>
-      <circle class="shine" cx="700" cy="70" r="7"/>
-    </svg>
+    <img class="brand-logo" src="assets/new-look-logo-neon-transparent.png" alt="NEW LOOK Hair & Beauty Saloon">
   </a>
 
   <div class="navlinks">
@@ -592,36 +590,7 @@ footer{
     <div class="eyebrow">R.T.C. COLONY • GUNTUR</div>
 
     <div class="hero-logo">
-      <svg class="logo-symbol" viewBox="0 0 1200 434" role="img" aria-label="New Look salon symbol">
-        <defs>
-          <linearGradient id="chromeGradientHero" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#ffffff"/>
-            <stop offset=".28" stop-color="#bfeaff"/>
-            <stop offset=".52" stop-color="#eaf9ff"/>
-            <stop offset=".75" stop-color="#77cfff"/>
-            <stop offset="1" stop-color="#dff7ff"/>
-          </linearGradient>
-          <filter id="logoGlowHero">
-            <feGaussianBlur stdDeviation="5" result="blur"/>
-            <feMerge>
-              <feMergeNode in="blur"/>
-              <feMergeNode in="SourceGraphic"/>
-            </feMerge>
-          </filter>
-        </defs>
-        <g fill="none" stroke="url(#chromeGradientHero)" stroke-linecap="round" stroke-linejoin="round" filter="url(#logoGlowHero)">
-          <path stroke-width="18" d="M80 105V315h145c55 0 75-82 7-98-28-7-67 3-105 3"/>
-          <path stroke-width="18" d="M350 270c-70-8-91-86-41-133 48-46 137-42 174 12 38 55 3 126-64 132-57 5-104-28-104-78 0-40 36-69 79-69 38 0 69 24 69 55 0 30-27 51-60 51-28 0-51-16-51-38 0-17 15-31 35-31"/>
-          <path stroke-width="18" d="M850 270c70-8 91-86 41-133-48-46-137-42-174 12-38 55-3 126 64 132 57 5 104-28 104-78 0-40-36-69-79-69-38 0-69 24-69 55 0 30 27 51 60 51 28 0 51-16 51-38 0-17-15-31-35-31"/>
-          <path stroke-width="18" d="M1010 105v210M1010 205l102-78c40-31 74 5 46 38l-132 150"/>
-          <path stroke-width="17" d="M600 185L500 70M600 185L700 70"/>
-          <circle cx="600" cy="185" r="20" stroke-width="12"/>
-        </g>
-        <circle cx="445" cy="195" r="15" fill="#07101c" stroke="#bfeaff" stroke-width="6"/>
-        <circle cx="755" cy="195" r="15" fill="#07101c" stroke="#bfeaff" stroke-width="6"/>
-        <circle cx="500" cy="70" r="7" fill="#fff"/>
-        <circle cx="700" cy="70" r="7" fill="#fff"/>
-      </svg>
+      <img class="logo-symbol hero-logo-image" src="assets/new-look-logo-neon-transparent.png" alt="NEW LOOK Hair & Beauty Saloon logo">
     </div>
 
     <h1>Where Your <span>New Look</span> Begins.</h1>
@@ -795,36 +764,7 @@ footer{
       <div class="contact-card">
 
         <div class="contact-logo">
-          <svg class="logo-symbol" viewBox="0 0 1200 434" role="img" aria-label="New Look salon symbol">
-            <defs>
-              <linearGradient id="chromeGradientContact" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stop-color="#ffffff"/>
-                <stop offset=".28" stop-color="#bfeaff"/>
-                <stop offset=".52" stop-color="#eaf9ff"/>
-                <stop offset=".75" stop-color="#77cfff"/>
-                <stop offset="1" stop-color="#dff7ff"/>
-              </linearGradient>
-              <filter id="logoGlowContact">
-                <feGaussianBlur stdDeviation="4" result="blur"/>
-                <feMerge>
-                  <feMergeNode in="blur"/>
-                  <feMergeNode in="SourceGraphic"/>
-                </feMerge>
-              </filter>
-            </defs>
-            <g fill="none" stroke="url(#chromeGradientContact)" stroke-linecap="round" stroke-linejoin="round" filter="url(#logoGlowContact)">
-              <path stroke-width="18" d="M80 105V315h145c55 0 75-82 7-98-28-7-67 3-105 3"/>
-              <path stroke-width="18" d="M350 270c-70-8-91-86-41-133 48-46 137-42 174 12 38 55 3 126-64 132-57 5-104-28-104-78 0-40 36-69 79-69 38 0 69 24 69 55 0 30-27 51-60 51-28 0-51-16-51-38 0-17 15-31 35-31"/>
-              <path stroke-width="18" d="M850 270c70-8 91-86 41-133-48-46-137-42-174 12-38 55-3 126 64 132 57 5 104-28 104-78 0-40-36-69-79-69-38 0-69 24-69 55 0 30 27 51 60 51 28 0 51-16 51-38 0-17-15-31-35-31"/>
-              <path stroke-width="18" d="M1010 105v210M1010 205l102-78c40-31 74 5 46 38l-132 150"/>
-              <path stroke-width="17" d="M600 185L500 70M600 185L700 70"/>
-              <circle cx="600" cy="185" r="20" stroke-width="12"/>
-            </g>
-            <circle cx="445" cy="195" r="15" fill="#07101c" stroke="#bfeaff" stroke-width="6"/>
-            <circle cx="755" cy="195" r="15" fill="#07101c" stroke="#bfeaff" stroke-width="6"/>
-            <circle cx="500" cy="70" r="7" fill="#fff"/>
-            <circle cx="700" cy="70" r="7" fill="#fff"/>
-          </svg>
+          <img class="logo-symbol contact-logo-image" src="assets/new-look-logo-neon-transparent.png" alt="NEW LOOK Hair & Beauty Saloon logo">
         </div>
 
         <h3>NEW LOOK Hair & Beauty Saloon</h3>
@@ -890,9 +830,3 @@ function book(e){
 
 </body>
 </html>
-'''
-
-path = Path("/mnt/data/New-Looks-Hair-Saloon-Final.html")
-path.write_text(html, encoding="utf-8")
-print(f"Created: {path}")
-print(f"Size: {path.stat().st_size:,} bytes")
