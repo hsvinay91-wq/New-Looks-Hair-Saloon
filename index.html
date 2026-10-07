@@ -1,71 +1,33 @@
-from pathlib import Path
-import re, zipfile, html as htmllib
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEW LOOK | Hair & Beauty Saloon</title>
+<meta name="description" content="NEW LOOK Hair & Beauty Saloon, R.T.C. Colony 1st Lane, Venkatasopeta, Guntur. Hair cuts, facials, body massage and D-TAN.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+:root{--bg:#0c0a0a;--card:#151111;--gold:#d7b06a;--gold2:#f0d49b;--text:#f7f1e8;--muted:#aaa19a;--line:#2c2420}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:var(--bg);color:var(--text);font-family:Inter,Arial,sans-serif;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:-30%;z-index:-2;background:radial-gradient(circle at 20% 20%,#3b2114 0,transparent 28%),radial-gradient(circle at 80% 30%,#33251a 0,transparent 24%),radial-gradient(circle at 50% 80%,#241514 0,transparent 30%);animation:bg 16s ease-in-out infinite alternate}
+@keyframes bg{to{transform:translate3d(2%, -2%,0) scale(1.06)}} a{text-decoration:none;color:inherit}
+nav{position:fixed;top:0;width:100%;z-index:20;padding:18px 6%;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(#0c0a0ae8,transparent);backdrop-filter:blur(8px)}
+.logo{display:flex;align-items:center;gap:10px;font-family:"Cormorant Garamond";font-size:25px;letter-spacing:2px;font-weight:700}.logo img{width:105px;height:auto;object-fit:contain}.logo span{color:var(--gold)}
+.navlinks{display:flex;gap:28px;font-size:13px;color:#ddd}.navlinks a:hover{color:var(--gold)}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:13px 21px;border:1px solid var(--gold);color:#17100b;background:var(--gold);border-radius:3px;font-weight:700;font-size:12px;letter-spacing:.5px;transition:.3s}.btn:hover{background:var(--gold2);transform:translateY(-2px)}
+.btn.outline{background:transparent;color:var(--gold)}.btn.outline:hover{color:#17100b;background:var(--gold)}
+.hero{min-height:100vh;display:grid;place-items:center;text-align:center;padding:130px 6% 80px;position:relative}
+.hero:after{content:"";position:absolute;inset:12% 15%;border:1px solid #d7b06a22;border-radius:50%;filter:blur(.2px);animation:pulse 5s ease-in-out infinite}
+@keyframes pulse{50%{transform:scale(1.04);opacity:.5}}
+.eyebrow{color:var(--gold);font-size:11px;letter-spacing:4px;text-transform:uppercase;margin-bottom:18px}.hero h1{font:600 clamp(58px,9vw,120px)/.82 "Cormorant Garamond";letter-spacing:-3px;max-width:1000px}.hero h1 em{color:var(--gold);font-style:normal}.hero p{max-width:620px;margin:28px auto;color:var(--muted);line-height:1.8;font-size:15px}.actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+section{padding:100px 6%;max-width:1250px;margin:auto}.sectionhead{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:45px}.sectionhead h2{font:600 clamp(40px,5vw,64px)/.9 "Cormorant Garamond"}.sectionhead p{color:var(--muted);max-width:430px;line-height:1.7}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.card{background:linear-gradient(145deg,#191311,#100d0d);border:1px solid var(--line);padding:28px;min-height:220px;transition:.35s;position:relative;overflow:hidden}.card:hover{transform:translateY(-7px);border-color:#8f6b35}.num{color:var(--gold);font-size:12px;letter-spacing:2px}.card h3{font:600 31px "Cormorant Garamond";margin:20px 0 10px}.card p{color:var(--muted);font-size:13px;line-height:1.7}.price{position:absolute;right:25px;bottom:25px;color:var(--gold);font-weight:700}
+.gallery{display:grid;grid-template-columns:1.4fr .8fr .8fr;grid-auto-rows:230px;gap:12px}.photo{border-radius:2px;overflow:hidden;position:relative;background-size:cover;background-position:center;filter:saturate(.85)}.photo:after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 45%,#000b)}.photo.big{grid-row:span 2;background-image:url('https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1200&q=85')}.photo.p2{background-image:url('https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=800&q=85')}.photo.p3{background-image:url('https://images.unsplash.com/photo-1519014816548-bf5e04f8b6d2?auto=format&fit=crop&w=800&q=85')}.photo.p4{background-image:url('https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=800&q=85')}.photo.p5{background-image:url('https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?auto=format&fit=crop&w=800&q=85')}
+.reviews{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.review{padding:30px;background:#151111;border:1px solid var(--line)}.stars{color:var(--gold);letter-spacing:3px}.review p{margin:18px 0;color:#d2cbc4;line-height:1.8;font-size:14px}.review b{font-size:13px}.booking{background:linear-gradient(120deg,#211711,#111);border:1px solid #5c4526;padding:55px;display:grid;grid-template-columns:1fr 1fr;gap:45px}.booking h2{font:600 58px/.9 "Cormorant Garamond"}.booking p{color:var(--muted);line-height:1.8;margin-top:18px}.form{display:grid;gap:12px}.form input,.form select,.form textarea{background:#0c0a0a;border:1px solid #352b25;color:#eee;padding:14px;border-radius:2px;font:13px Inter}.form textarea{min-height:100px;resize:vertical}.map{height:380px;border:1px solid var(--line);overflow:hidden}.map iframe{width:100%;height:100%;border:0;filter:grayscale(.9) contrast(1.1)}
+footer{padding:35px 6%;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:20px;color:#8f8882;font-size:12px}.gold{color:var(--gold)}
+.toast{position:fixed;right:20px;bottom:20px;background:#f2d59a;color:#18110b;padding:14px 18px;border-radius:4px;display:none;z-index:50;font-size:13px;font-weight:700}
+@media(max-width:800px){.navlinks{display:none}.grid,.reviews{grid-template-columns:1fr}.gallery{grid-template-columns:1fr 1fr;grid-auto-rows:180px}.photo.big{grid-row:span 2}.booking{grid-template-columns:1fr;padding:32px}.booking h2{font-size:48px}.sectionhead{display:block}.sectionhead p{margin-top:18px}section{padding:75px 5%}}
 
-# Use the existing demo created in the previous turn.
-src = Path("/mnt/data/NEW_LOOK_Hair_Beauty_Saloon_Demo.html")
-if not src.exists():
-    # Fallback: recreate from the previously uploaded/generated package if needed.
-    raise FileNotFoundError("The previous salon demo HTML is not available in the working folder.")
-
-text = src.read_text(encoding="utf-8")
-
-# Premium custom brand logo: vector/CSS-style mark, not a cropped shop-board image.
-logo = r'''<a class="brand" href="#">
-  <svg class="brandmark" viewBox="0 0 64 64" aria-hidden="true">
-    <circle cx="32" cy="32" r="29" fill="none" stroke="currentColor" stroke-width="1.5"/>
-    <path d="M20 42c8-10 16-20 26-25" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
-    <path d="M25 19c-4 0-7 3-7 7s3 7 7 7 7-3 7-7-3-7-7-7Zm14 0c-4 0-7 3-7 7s3 7 7 7 7-3 7-7-3-7-7-7Z" fill="none" stroke="currentColor" stroke-width="2"/>
-    <path d="M32 33l8 10" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-  </svg>
-  <span><strong>NEW</strong><b>LOOK</b><small>HAIR &amp; BEAUTY SALOON</small></span>
-</a>'''
-
-# Replace existing navbar logo if present.
-text = re.sub(r'<a class="logo" href="#">.*?</a>', logo, text, count=1, flags=re.S)
-# Replace any old brand text in hero eyebrow.
-text = text.replace("VELVET &amp; VOGUE", "NEW LOOK")
-text = text.replace("VELVET & VOGUE", "NEW LOOK")
-
-# Replace the hero logo/image block if this version contains one, with a purpose-built brand lockup.
-hero_brand = r'''
-<div class="hero-brand">
-  <div class="hero-mark">
-    <svg viewBox="0 0 80 80" aria-hidden="true">
-      <circle cx="40" cy="40" r="37" fill="none" stroke="currentColor" stroke-width="1.4"/>
-      <path d="M25 52c9-13 18-25 31-34" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-      <path d="M30 22c-5 0-9 4-9 9s4 9 9 9 9-4 9-9-4-9-9-9Zm20 0c-5 0-9 4-9 9s4 9 9 9 9-4 9-9-4-9-9-9Z" fill="none" stroke="currentColor" stroke-width="2.4"/>
-    </svg>
-  </div>
-  <div>
-    <div class="hero-logo-title"><span>NEW</span> LOOK</div>
-    <div class="hero-logo-sub">HAIR &amp; BEAUTY SALOON</div>
-  </div>
-</div>'''
-# If there is an img in hero, remove only the logo-like image area.
-text = re.sub(r'<img[^>]+(?:logo|new.?look)[^>]*>', '', text, flags=re.I)
-if 'class="hero-brand"' not in text:
-    text = text.replace('<div class="eyebrow">NEW LOOK • HAIR & BEAUTY SALOON • GUNTUR</div>',
-                        '<div class="eyebrow">R.T.C. COLONY • GUNTUR</div>' + hero_brand)
-
-# Update contact/map details.
-text = re.sub(r'<div class="map"><iframe.*?</iframe></div>',
-'''<div class="map">
-  <iframe src="https://www.google.com/maps?q=New%20look%20hair%20%26%20beauty%20saloon%2C%20Rtc%20colony%2C%201st%20Ln%2C%20Raghava%20Nagar%2C%20Guntur%2C%20Andhra%20Pradesh%20522001&output=embed"
-          loading="lazy" allowfullscreen></iframe>
-</div>''', text, flags=re.S)
-
-text = text.replace("123 Jubilee Hills Road, Hyderabad, Telangana 500033",
-                    "R.T.C. Colony, 1st Lane, Raghava Nagar, Guntur, Andhra Pradesh 522001")
-text = text.replace("+91 98765 43210", "+91 90005 67575")
-
-# Add an external Google Maps button if not already present.
-maps_btn = '''<a class="btn outline" target="_blank" rel="noopener"
-href="https://maps.app.goo.gl/gfEKpoR4mLAbHuBu5">GET DIRECTIONS</a>'''
-if "GET DIRECTIONS" not in text:
-    text = text.replace('</div>\n</section>\n\n<footer', f'<div class="map-actions">{maps_btn}</div></div>\n</section>\n\n<footer', 1)
-
-# Add/override styles for logo and map CTA.
-style_add = r'''
 /* NEW LOOK brand identity */
 .brand{display:flex;align-items:center;gap:10px;color:var(--gold);min-width:230px}
 .brandmark{width:43px;height:43px;flex:0 0 43px}
@@ -86,19 +48,74 @@ style_add = r'''
   .hero-logo-title{font-size:48px}.hero-logo-sub{font-size:8px;letter-spacing:2.5px}
   .map-actions{justify-content:center}
 }
-'''
-text = text.replace("</style>", style_add + "</style>")
+</style>
+</head>
+<body>
+<nav><a class="brand" href="#">
+  <svg class="brandmark" viewBox="0 0 64 64" aria-hidden="true">
+    <circle cx="32" cy="32" r="29" fill="none" stroke="currentColor" stroke-width="1.5"/>
+    <path d="M20 42c8-10 16-20 26-25" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+    <path d="M25 19c-4 0-7 3-7 7s3 7 7 7 7-3 7-7-3-7-7-7Zm14 0c-4 0-7 3-7 7s3 7 7 7 7-3 7-7-3-7-7-7Z" fill="none" stroke="currentColor" stroke-width="2"/>
+    <path d="M32 33l8 10" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+  </svg>
+  <span><strong>NEW</strong><b>LOOK</b><small>HAIR &amp; BEAUTY SALOON</small></span>
+</a><div class="navlinks"><a href="#services">Services</a><a href="#gallery">Gallery</a><a href="#reviews">Reviews</a><a href="#contact">Contact</a></div><a class="btn" href="#booking">BOOK NOW</a></nav>
 
-# Make footer brand accurate too.
-text = text.replace("© 2026 <span class=\"gold\">VELVET & VOGUE</span>",
-                    "© 2026 <span class=\"gold\">NEW LOOK HAIR & BEAUTY SALOON</span>")
+<header class="hero">
+<div>
+<div class="eyebrow">NEW LOOK • Hair & Beauty Saloon • Guntur</div>
+<div style="margin-bottom:22px"></div><h1>Style That<br>Looks <em>Good.</em></h1>
+<p>Professional hair & beauty care for a fresh, confident look. Signature cuts, colour, grooming, bridal artistry and a truly elevated salon experience.</p>
+<div class="actions"><a class="btn" href="#booking">BOOK AN APPOINTMENT</a><a class="btn outline" href="#services">EXPLORE SERVICES</a></div>
+</div>
+</header>
 
-out = Path("/mnt/data/NEW_LOOK_Hair_Beauty_Saloon_Premium.html")
-out.write_text(text, encoding="utf-8")
+<section id="services">
+<div class="sectionhead"><div><div class="eyebrow">Our Expertise</div><h2>Signature Services</h2></div><p>From everyday grooming to once-in-a-lifetime bridal moments, our artists create looks designed around you.</p></div>
+<div class="grid">
+<div class="card"><span class="num">01 — HAIR</span><h3>Hair Cut</h3><p>Clean, stylish and professional hair cuts for a fresh new look.</p><span class="price">₹59+</span></div>
+<div class="card"><span class="num">02 — COLOUR</span><h3>Hair Colour</h3><p>Quality hair colour service with a stylish finish.</p><span class="price">₹149+</span></div>
+<div class="card"><span class="num">03 — BEAUTY</span><h3>Facials</h3><p>Refreshing facial care for a clean, healthy-looking glow.</p><span class="price">₹69+</span></div>
+<div class="card"><span class="num">04 — GROOMING</span><h3>Shaving</h3><p>Professional shaving and grooming for a neat, confident look.</p><span class="price">₹49+</span></div>
+<div class="card"><span class="num">05 — BRIDAL</span><h3>Body Massage</h3><p>Relaxing body massage designed for comfort and refreshment.</p><span class="price">₹99+</span></div>
+<div class="card"><span class="num">06 — CARE</span><h3>D-TAN</h3><p>Professional D-TAN care for brighter, refreshed-looking skin.</p><span class="price">₹999+</span></div>
+</div>
+</section>
 
-zip_path = Path("/mnt/data/NEW_LOOK_Hair_Beauty_Saloon_Premium.zip")
-with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as z:
-    z.write(out, out.name)
+<section id="gallery">
+<div class="sectionhead"><div><div class="eyebrow">The Studio</div><h2>Inside the Experience</h2></div></div>
+<div class="gallery"><div class="photo big"></div><div class="photo p2"></div><div class="photo p3"></div><div class="photo p4"></div><div class="photo p5"></div></div>
+</section>
 
-print(f"Updated website: {out}")
-print(f"ZIP package: {zip_path}")
+<section id="reviews">
+<div class="sectionhead"><div><div class="eyebrow">Loved By Our Clients</div><h2>Client Stories</h2></div></div>
+<div class="reviews">
+<div class="review"><div class="stars">★★★★★</div><p>“Absolutely beautiful experience. The stylist understood exactly what I wanted and the finish was perfect.”</p><b>— Ananya R.</b></div>
+<div class="review"><div class="stars">★★★★★</div><p>“The ambience feels premium, the team is professional and the colour result was better than I expected.”</p><b>— Rahul M.</b></div>
+<div class="review"><div class="stars">★★★★★</div><p>“Booked bridal services here and every detail was handled beautifully. Highly recommended.”</p><b>— Sneha K.</b></div>
+</div>
+</section>
+
+<section id="booking">
+<div class="booking">
+<div><div class="eyebrow">Reserve Your Moment</div><h2>Ready for your next look?</h2><p>Tell us what you need. Our team will confirm your appointment shortly.</p><br><a class="btn" href="tel:+919000567575">CALL +91 90005 67575</a></div>
+<form class="form" onsubmit="book(event)"><input id="name" placeholder="Your Name" required><input id="phone" placeholder="Phone Number" required><select id="service" required><option value="">Choose Service</option><option>Hair Cuts & Styling</option><option>Hair Colour</option><option>Facials & Skin Care</option><option>Men's Grooming</option><option>Body Massage</option></select><input id="date" type="date" required><textarea id="msg" placeholder="Any special request?"></textarea><button class="btn" type="submit">REQUEST APPOINTMENT</button></form>
+</div>
+</section>
+
+<section id="contact">
+<div class="sectionhead"><div><div class="eyebrow">Find Us</div><h2>Visit The Studio</h2></div><p>R.T.C. Colony 1st Lane, Venkatasopeta, Guntur, Andhra Pradesh<br><br><span class="gold">Mon–Sun • 9:00 AM – 9:00 PM</span></p></div>
+<div class="map">
+  <iframe src="https://www.google.com/maps?q=New%20look%20hair%20%26%20beauty%20saloon%2C%20Rtc%20colony%2C%201st%20Ln%2C%20Raghava%20Nagar%2C%20Guntur%2C%20Andhra%20Pradesh%20522001&output=embed"
+          loading="lazy" allowfullscreen></iframe>
+<div class="map-actions"><a class="btn outline" target="_blank" rel="noopener"
+href="https://maps.app.goo.gl/gfEKpoR4mLAbHuBu5">GET DIRECTIONS</a></div></div>
+</section>
+
+<footer><div>© 2026 <span class="gold">NEW LOOK</span>. All rights reserved.</div><div>📞 90005 67575 • 81060 43208 • Guntur</div></footer>
+<div class="toast" id="toast">Appointment request received ✓</div>
+<script>
+function book(e){e.preventDefault();let t=document.getElementById('toast');t.textContent='Thanks '+document.getElementById('name').value+'! Appointment request received ✓';t.style.display='block';setTimeout(()=>t.style.display='none',3500);e.target.reset()}
+</script>
+</body>
+</html>
